@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <link rel="stylesheet" href="../dist/output.css">
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="root">
+        <main>
+            <nav class="todo min-h-screen w-full flex justify-center items-center">
+                <div class="container mx-auto">
+                    <div class="todo_wrapper w-[900px] min-h-[600px] shadow-2xl mx-auto p-4">
+                        <h1 class="text-3xl text-center font-bold my-4 text-pink-700">MY TODO APP</h1>
+                        <div class="flex">
+                            <input
+                                class="p-3 w-full focus:ring-2 rounded focus-ring-pink-200 duration-1000 outline-none border"
+                                type="text" :value="title" @input="$event=>title=$event.target.value"
+                                placeholder="Enter task title">
+                            <button @click="addTask"
+                                class="p-3 bg-pink-700 text-white focus:ring-2 rounded ring-slate-600">SAVE
+                            </button>
+                        </div>
+                        <div class="flex p-2">
+                            <div class="text-center rounded font-bold text-white item p-4 w-1/2 bg-red-500 mx-3">To do
+                                done: {{this.task.length}}</div>
+                            <div
+                                class="text-center rounded font-bold text-white item p-4 w-1/2 bg-green-500 mx-3 focus:ring-2 ring-slate-600">
+                                Todo
+                                on progress: {{this.todo.length}}</div>
+                        </div>
+
+                        <ul class="w-full p-4">
+                            <h1 class="text-center" v-if="!task.length">
+                                Empty task list
+                            </h1>
+                            <li v-for="(t,i) in task" class="p-4 shadow-2xl border flex justify-between" :key="task.id">
+                                <div>
+                                    <span class="text-pink-800 font-bold mr-2">{{i+1}}</span>
+                                    <input v-if="this.id!=t.id" type="button" :value="t.title">
+                                    <input v-if="this.id==t.id" type="text" class="border border-black rounded-2xl p-2" :value="editted" @input="$event=>editted=$event.target.value">
+                                </div>
+                                <div v-if="this.id!=t.id">
+                                    <button type="submit"
+                                        class="mx-2 p-2 fl bg-red-700 text-white focus:ring-2 rounded ring-slate-600"
+                                        value="REMOVE">
+                                        <i class="bx bxs-trash" @click="()=>remove(t.id)"></i>
+                                    </button>
+                                    <button type="submit"
+                                        class="p-2 mx-2 fl bg-red-700 text-white focus:ring-2 rounded ring-slate-600">
+                                        <i class="bx bxs-edit" @click="()=>edit(t.id)"></i>
+                                    </button>
+                                    <button type="submit"
+                                        class="p-2 fl bg-green-700 text-white focus:ring-2 rounded ring-slate-600">
+                                        <i class="bx bxs-checkbox-minus" @click="()=>done(t.id)" ></i>
+                                    </button>
+                                </div>
+                                <div v-if="this.id==t.id">
+                                    <i class="bx bx-check text-4xl bg-red-700" @click="()=>check(t.id)"></i>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </main>
+    </div>
+</body>
+<script src="./app.js"></script>
+
+</html>
